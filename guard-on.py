@@ -13,7 +13,6 @@ def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def get_userid(token):
-    """Fetches the user's Facebook ID and name using the access token."""
     url = f"https://graph.facebook.com/me?access_token={token}"
     res = requests.get(url)
     if res.status_code != 200:
@@ -22,7 +21,6 @@ def get_userid(token):
     return info.get('id'), info.get('name')
 
 def get_token(email, password):
-    """Retrieves an access token using email and password."""
     headers = {
         'authorization': 'OAuth 350685531728|62f8ce9f74b12f84c123cc23437a4a32',
         'x-fb-friendly-name': 'Authenticate',
@@ -53,7 +51,6 @@ def get_token(email, password):
     return result.get('access_token')
 
 def turn_shield(token, enable=True):
-    """Activates or deactivates Facebook Profile Guard."""
     uid, name = get_userid(token)
     if not uid:
         return
@@ -87,7 +84,6 @@ def turn_shield(token, enable=True):
         console.print(Panel(f"[bold yellow]⚠ Unexpected response: {response_text}[/bold yellow]", style='bold yellow'))
 
 def guard_on():
-    """Handles user input for managing Profile Guard."""
     email = console.input('\n[bold yellow]📧 Enter your Facebook Email: [/bold yellow]').strip()
     password = console.input('[bold yellow]🔑 Enter your Facebook Password: [/bold yellow]').strip()
     token = get_token(email, password)
